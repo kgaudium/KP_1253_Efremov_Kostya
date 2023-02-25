@@ -1,0 +1,3 @@
+D:\Project Files (x64)\RiderProjects\KP_1253_Efremov_Kostya\CP\obj\Debug\CP.csproj.AssemblyReference.cache
+D:\Project Files (x64)\RiderProjects\KP_1253_Efremov_Kostya\CP\obj\Debug\CP.csproj.SuggestedBindingRedirects.cache
+D:\Project Files (x64)\RiderProjects\KP_1253_Efremov_Kostya\CP\obj\Debug\CP.csproj.CoreCompileInputs.cache
