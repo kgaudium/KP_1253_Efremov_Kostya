@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace CP
+namespace CP2
 {
     public class PassGen
     {
