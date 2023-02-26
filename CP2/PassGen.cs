@@ -8,7 +8,7 @@ namespace PasswordGenerator
     {
         static Random rand;
 
-        static int Seed;
+        static int Seed = -1;
         static int WordLength;
         static int DigitCount;
         static int LetterCount;
@@ -41,127 +41,12 @@ namespace PasswordGenerator
 
             AllowedOptions = new[] {lenArg, digitsArg, lettersArg, upperArg, specialArg, seedArg, debugArg }; // Список всех опций
 
-
-            // Парсит опции (сделать проверку на то, задавались ли опции ранее?)
-            for (int i = 0; i < args.Length; i++)
-            {
-                string[] splitOption = args[i].Split('-');
-
-                if (splitOption.Length == 1) // Если без минусов
-                {
-                    if (args.Length == 1) // и в списке всего одна опция
-                    {
-                        int len;
-                        
-                        if (int.TryParse(splitOption[0], out len)) // пытаемся этот пргумент преобразовать в число
-                        {
-                            SetLength(len);
-                        }
-                        else
-                        {
-                            // throw new Exception($"Incorrect \"Length\" option: {args[i]} must be an integer");
-                            PrintErrorAndExit($"Incorrect \"Length\" option: {args[i]} must be an integer");
-                        }
-                    }
-                    else
-                    {
-                        // throw new Exception($"Unrecognized option: {args[i]}");
-                        PrintErrorAndExit($"Unrecognized option: {args[i]}");
-                    }
-                }
-                
-                
-                else if (splitOption.Length == 2) // Если один минус -
-                {
-                    char shortName;
-                    if (char.TryParse(splitOption[1], out shortName)) // получилось преобразовать имя в символ
-                    {
-                        Option option = FindOptionByShortName(shortName); // ищем опцию в списке опций
-
-                        if (option == null) // не нашли
-                            // throw new Exception($"Option {args[i]} not found!");
-                            PrintErrorAndExit($"Option {args[i]} not found!");
-
-                        if (option.ArgumentType != null && i + 1 <= args.Length) // Если у опции есть аргументы
-                        {
-                            // if (i + 1 >= args.Length) throw new Exception($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
-                            if (i + 1 >= args.Length) PrintErrorAndExit($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
-                            string optionArg = args[++i];
-                        
-                            if (TypeDescriptor.GetConverter(option.ArgumentType).IsValid(optionArg)) // Если аргумент можно привести к нужному типу
-                                option.TargetMethod.DynamicInvoke(Convert.ChangeType(optionArg, option.ArgumentType));
-                            else
-                            {
-                                // throw new Exception($"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
-                                PrintErrorAndExit($"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
-                            }
-                        }
-                        else
-                        {
-                            option.TargetMethod.DynamicInvoke();
-                        }
-                    }
-                    else
-                    {
-                        foreach (char opt in splitOption[1])
-                        {
-                            Option option = FindOptionByShortName(opt);
-
-                            if (option == null)
-                            {
-                                // throw new Exception($"Unrecognized option: {args[i]}");
-                                PrintErrorAndExit($"Unrecognized option: {args[i]}");
-                            }
-                            else if (option.ArgumentType != null)
-                            {
-                                PrintErrorAndExit($"{option.Name} option have an argument of type {option.ArgumentType} and and cannot be written in format {args[i]}!");
-                            }
-                            
-                            option.TargetMethod.DynamicInvoke();
-                        }
-                        
-                    }
-                    
-                }
-                
-                else if (splitOption.Length == 3) // Если два минуса --
-                {
-                    Option option = FindOptionByName(splitOption[2]);
-
-                    if (option == null)
-                        // throw new Exception($"Option {args[i]} not found!");
-                        PrintErrorAndExit($"Option {args[i]} not found!");
-
-                    if (option.ArgumentType != null) // Если у опции есть аргументы
-                    {
-                        // if (i + 1 >= args.Length) throw new Exception($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
-                        if (i + 1 >= args.Length) PrintErrorAndExit($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
-                        string optionArg = args[++i];
-
-                        if (TypeDescriptor.GetConverter(option.ArgumentType)
-                            .IsValid(optionArg)) // Если аргумент можно привести к нужному типу
-                            option.TargetMethod.DynamicInvoke(Convert.ChangeType(optionArg, option.ArgumentType));
-                        else
-                        {
-                            // throw new Exception( $"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
-                            PrintErrorAndExit( $"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
-                        }
-                    }
-                    else
-                    {
-                        option.TargetMethod.DynamicInvoke();
-                    }
-                }
-
-                else
-                {
-                    // throw new Exception($"Invalid option: {args[i]}");
-                    PrintErrorAndExit($"Invalid option: {args[i]}");
-                }
-            }
+            // Парсит аргументы
+            OptionParser.ParseOptions(args, AllowedOptions, lenArg);
+            
 
             // Проверяет адекватность введённых параметров
-            if (DigitCount + LetterCount > WordLength)
+            if (DigitCount + LetterCount > WordLength && WordLength != default)
             {
                 PrintErrorAndExit("Length must be greater or equals Digits + Letters!");
             }
@@ -169,7 +54,7 @@ namespace PasswordGenerator
             {
                 PrintWarning("There is no place for special symbols. Digits + Letters = Length!");
             }
-			
+            
 			if (WordLength == default && (DigitCount != default || LetterCount != default))
 			{
 				WordLength = DigitCount + LetterCount;
@@ -179,14 +64,16 @@ namespace PasswordGenerator
             {
                 WordLength = 16;
             }
-
-            rand = new Random(Seed);
             
+            // выбирает сид
+            rand = Seed < 0 ? new Random() : new Random(Seed);
+
             // Инициализирует пустое слово
             SymbolType[] word = new SymbolType[WordLength];
             
             if (Debug) Console.Write("Initial (empty) array: ");
             if (Debug) PrintArray(word);
+            
             // Заполняет список
             for (int _ = 0; _ < DigitCount; _++)
             {
@@ -214,6 +101,7 @@ namespace PasswordGenerator
                 Password += GenSymbol(symbol);
             }
             
+            if (Debug) Console.WriteLine($"Length: {WordLength}");
             Console.WriteLine($"Your Password: {Password}"); 
             //Console.ReadLine();
             
@@ -294,29 +182,8 @@ namespace PasswordGenerator
             return GenSymbol((int)type);
         }
 
-        
-        
-        static Option FindOptionByName(string name)
-        {
-            foreach (var argument in AllowedOptions)
-            {
-                if (argument.Name == name) return argument;
-            }
 
-            return null;
-        }
-        static Option FindOptionByShortName(char shortName)
-        {
-            foreach (var argument in AllowedOptions)
-            {
-                if (argument.Shortname == shortName) return argument;
-            }
 
-            return null;
-        }
-        
-        
-        
         static int[] GetNullIndexes(SymbolType[] arr)
         {
             List<int> nulles = new List<int>();
