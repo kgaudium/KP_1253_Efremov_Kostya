@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.ComponentModel;
 
 namespace CP2
 {
@@ -16,7 +16,7 @@ namespace CP2
 
         static List<int> AllowedTypes;  // список типов, которые нужно генерить
 
-        static Argument[] AllowedCommands;
+        static Option[] AllowedOptions;
 
         static string pwd;
         // file, flags
@@ -28,55 +28,112 @@ namespace CP2
 
         static void Main(string[] args)
         {
-            Argument lenArg = new Argument("length", typeof(int), SetLength);
-            Argument digitsArg = new Argument("digits", typeof(int), SetLength); // 
-            Argument lettersArg = new Argument("letters", typeof(int), SetLength); //
-            Argument upperArg = new Argument("uppercase", 'u', typeof(int), SetUppercase);
-            Argument specialArg = new Argument("special", 's', typeof(int), SetSpecial);
+            Option lenArg = new Option("length", typeof(int), SetLength);
+            Option digitsArg = new Option("digits", typeof(int), SetDigitsCount);
+            Option lettersArg = new Option("letters", typeof(int), SetLettersCount);
+            Option upperArg = new Option("uppercase", 'u', SetUppercase);
+            Option specialArg = new Option("special", 's', SetSpecial);
 
-            AllowedCommands = new[] {lenArg, digitsArg, lettersArg, upperArg, specialArg };
+            AllowedOptions = new[] {lenArg, digitsArg, lettersArg, upperArg, specialArg }; // Список всех опций
+
+
+            // Парсит опции (сделать проверку на то, задавались ли опции ранее?)
+            for (int i = 0; i < args.Length; i++)
+            {
+                string[] splitOption = args[i].Split('-');
+
+                if (splitOption.Length == 1) // Если без минусов
+                {
+                    if (args.Length == 1)
+                    {
+                        int len;
+                        
+                        if (int.TryParse(splitOption[0], out len))
+                        {
+                            SetLength(len);
+                        }
+                        else
+                        {
+                            throw new Exception($"Incorrect \"Length\" option: {args[i]} must be an integer");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Unrecognized option: {args[i]}");
+                    }
+                }
+                
+                
+                else if (splitOption.Length == 2) // Если один минус -
+                {
+                    char shortName;
+                    if (char.TryParse(splitOption[1], out shortName)) // получилось преобразовать имя в символ
+                    {
+                        Option option = FindOptionByShortName(shortName);
+
+                        if (option == null)
+                            throw new Exception($"Option {args[i]} not found!");
+
+                        if (option.ArgumentType != null && i + 1 <= args.Length) // Если у опции есть аргументы
+                        {
+                            if (i + 1 >= args.Length) throw new Exception($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
+                            string optionArg = args[++i];
+                        
+                            if (TypeDescriptor.GetConverter(option.ArgumentType).IsValid(optionArg)) // Если аргумент можно привести к нужному типу
+                                option.TargetMethod.DynamicInvoke(Convert.ChangeType(optionArg, option.ArgumentType));
+                            else
+                            {
+                                throw new Exception($"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
+                            }
+                        }
+                        else
+                        {
+                            option.TargetMethod.DynamicInvoke();
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Unrecognized option: {args[i]}");
+                    }
+                    
+                }
+                
+                else if (splitOption.Length == 3) // Если два минуса --
+                {
+                    Option option = FindOptionByName(splitOption[2]);
+
+                    if (option == null)
+                        throw new Exception($"Option {args[i]} not found!");
+
+                    if (option.ArgumentType != null) // Если у опции есть аргументы
+                    {
+                        if (i + 1 >= args.Length) throw new Exception($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
+                        string optionArg = args[++i];
+
+                        if (TypeDescriptor.GetConverter(option.ArgumentType)
+                            .IsValid(optionArg)) // Если аргумент можно привести к нужному типу
+                            option.TargetMethod.DynamicInvoke(Convert.ChangeType(optionArg, option.ArgumentType));
+                        else
+                        {
+                            throw new Exception(
+                                $"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
+                        }
+                    }
+                    else
+                    {
+                        option.TargetMethod.DynamicInvoke();
+                    }
+                }
+
+                else
+                {
+                    throw new Exception($"Invalid option: {args[i]}");
+                }
+            }
+
+            // Проверяет адекватность введённых параметров
+            // если длина меньше... бла бла бла
             
-            // Парсит аргументы (можно было бы делать сплит сразу по коммандам "--length", а потом по "="
-            // for (int i = 0; i < args.Length; i++)
-            // {
-            //     if (args[i].Substring(0, 2) == "--")
-            //     {
-            //         string command = args[i].Substring(2, args[i].Length);
-            //
-            //         if (command.Split('=').Length == 1)
-            //         {
-            //             switch (command)
-            //             {
-            //                 case "uppercase":
-            //                     SetUppercase();
-            //                     break;
-            //                 
-            //                 case "special":
-            //                     SetSpecial();
-            //                     break;
-            //                 
-            //                 case "length":
-            //                     int len;
-            //                     
-            //                     if (!int.TryParse(args[++i], out len))
-            //                     {
-            //                         throw new Exception($"Incorrect \"length\" command argument! Expected integer, got {args[++i]}!");
-            //                     }
-            //                         
-            //                     SetLength(len);
-            //                     break;
-            //                 
-            //                 case "digits":
-            //                     
-            //                     break;
-            //                 
-            //                 default: break;
-            //                 
-            //             }
-            //         }
-            //     }
-            // }
-
             
             SymbolType[] word = new SymbolType[WordLength];
 
@@ -97,33 +154,40 @@ namespace CP2
             }
             
             Console.WriteLine(pwd);
-            Console.ReadLine();
+            //Console.ReadLine();
             
         }
 
         static void SetUppercase()
         {
             UseUppercase = true;
+            Console.WriteLine("аперкейс");
         }
         static void SetSpecial()
         {
             UseSpecial = true;
+            Console.WriteLine("спещиал");
         }
 
         static void SetLength(int len)
         {
             WordLength = len;
+            Console.WriteLine($"длина - {len}");
         }
         
         static void SetDigitsCount(int count)
         {
             DigitCount = count;
+            Console.WriteLine($"колво цифр - {count}");
         }
 
         static void SetLettersCount(int count)
         {
             LetterCount = count;
+            Console.WriteLine($"колво букв - {count}");
         }
+        
+        
         
         static char GenSymbol(int type)
         {
@@ -137,7 +201,6 @@ namespace CP2
             
             return symbols[type][rand.Next(symbols[type].Length)];
         }
-
         static char GenSymbol(string type)
         {
             int typeId;
@@ -152,19 +215,41 @@ namespace CP2
 
             return GenSymbol(typeId);
         }
-
         static char GenSymbol(SymbolType type)
         {
             return GenSymbol((int)type);
         }
 
+        
+        
+        static Option FindOptionByName(string name)
+        {
+            foreach (var argument in AllowedOptions)
+            {
+                if (argument.Name == name) return argument;
+            }
+
+            return null;
+        }
+        static Option FindOptionByShortName(char shortName)
+        {
+            foreach (var argument in AllowedOptions)
+            {
+                if (argument.Shortname == shortName) return argument;
+            }
+
+            return null;
+        }
+        
+        
+        
         static int[] GetNullIndexes(SymbolType[] arr)
         {
             List<int> nulles = new List<int>();
             
             for (int i = 0; i < arr.Length; i++)
             {
-                if (arr[i] == null)
+                if (arr[i] == 0)
                 {
                     nulles.Add(i);
                 }
@@ -173,11 +258,12 @@ namespace CP2
             return nulles.ToArray();
         }
         
+        
+        
         static int GetRandomIntFromList(List<int> list)
         {
-            return list[rand.Next(0, list.Count-1)];
+            return list[rand.Next(0, list.Count)];
         }
-
         static int GetRandomIntFromList(List<int> list, int minIndex, int maxIndex)
         {
             return list[rand.Next(minIndex, maxIndex)];
