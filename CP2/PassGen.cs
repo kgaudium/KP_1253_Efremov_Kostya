@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace CP2
+namespace PasswordGenerator
 {
     public class PassGen
     {
-        static Random rand = new Random();
+        static Random rand = new();
         
         static int WordLength;
         static int DigitCount;
@@ -14,7 +14,7 @@ namespace CP2
         static bool UseUppercase;
         static bool UseSpecial;
 
-        static List<int> AllowedTypes;  // список типов, которые нужно генерить
+        static List<int> AllowedTypes = new List<int>() {1,2};  // список типов, которые нужно генерить
 
         static Option[] AllowedOptions;
 
@@ -23,6 +23,7 @@ namespace CP2
 
         enum SymbolType : int
         {
+          //   0      1      2      3        4
             Null, Digit, Lower, Upper, Special
         }
 
@@ -44,22 +45,24 @@ namespace CP2
 
                 if (splitOption.Length == 1) // Если без минусов
                 {
-                    if (args.Length == 1)
+                    if (args.Length == 1) // и в списке всего одна опция
                     {
                         int len;
                         
-                        if (int.TryParse(splitOption[0], out len))
+                        if (int.TryParse(splitOption[0], out len)) // пытаемся этот пргумент преобразовать в число
                         {
                             SetLength(len);
                         }
                         else
                         {
-                            throw new Exception($"Incorrect \"Length\" option: {args[i]} must be an integer");
+                            // throw new Exception($"Incorrect \"Length\" option: {args[i]} must be an integer");
+                            PrintErrorAndExit($"Incorrect \"Length\" option: {args[i]} must be an integer");
                         }
                     }
                     else
                     {
-                        throw new Exception($"Unrecognized option: {args[i]}");
+                        // throw new Exception($"Unrecognized option: {args[i]}");
+                        PrintErrorAndExit($"Unrecognized option: {args[i]}");
                     }
                 }
                 
@@ -69,31 +72,35 @@ namespace CP2
                     char shortName;
                     if (char.TryParse(splitOption[1], out shortName)) // получилось преобразовать имя в символ
                     {
-                        Option option = FindOptionByShortName(shortName);
+                        Option option = FindOptionByShortName(shortName); // ищем опцию в списке опций
 
-                        if (option == null)
-                            throw new Exception($"Option {args[i]} not found!");
+                        if (option == null) // не нашли
+                            // throw new Exception($"Option {args[i]} not found!");
+                            PrintErrorAndExit($"Option {args[i]} not found!");
 
                         if (option.ArgumentType != null && i + 1 <= args.Length) // Если у опции есть аргументы
                         {
-                            if (i + 1 >= args.Length) throw new Exception($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
+                            // if (i + 1 >= args.Length) throw new Exception($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
+                            if (i + 1 >= args.Length) PrintErrorAndExit($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
                             string optionArg = args[++i];
                         
                             if (TypeDescriptor.GetConverter(option.ArgumentType).IsValid(optionArg)) // Если аргумент можно привести к нужному типу
                                 option.TargetMethod.DynamicInvoke(Convert.ChangeType(optionArg, option.ArgumentType));
                             else
                             {
-                                throw new Exception($"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
+                                // throw new Exception($"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
+                                PrintErrorAndExit($"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
                             }
                         }
                         else
                         {
                             option.TargetMethod.DynamicInvoke();
                         }
-                    }
+                    } // TODO: случай где -us
                     else
                     {
-                        throw new Exception($"Unrecognized option: {args[i]}");
+                        // throw new Exception($"Unrecognized option: {args[i]}");
+                        PrintErrorAndExit($"Unrecognized option: {args[i]}");
                     }
                     
                 }
@@ -103,11 +110,13 @@ namespace CP2
                     Option option = FindOptionByName(splitOption[2]);
 
                     if (option == null)
-                        throw new Exception($"Option {args[i]} not found!");
+                        // throw new Exception($"Option {args[i]} not found!");
+                        PrintErrorAndExit($"Option {args[i]} not found!");
 
                     if (option.ArgumentType != null) // Если у опции есть аргументы
                     {
-                        if (i + 1 >= args.Length) throw new Exception($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
+                        // if (i + 1 >= args.Length) throw new Exception($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
+                        if (i + 1 >= args.Length) PrintErrorAndExit($"Option \"{option.Name}\" must have a {option.ArgumentType} argument!");
                         string optionArg = args[++i];
 
                         if (TypeDescriptor.GetConverter(option.ArgumentType)
@@ -115,8 +124,8 @@ namespace CP2
                             option.TargetMethod.DynamicInvoke(Convert.ChangeType(optionArg, option.ArgumentType));
                         else
                         {
-                            throw new Exception(
-                                $"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
+                            // throw new Exception( $"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
+                            PrintErrorAndExit( $"Invalid {option.Name} option argument: {optionArg}! Must be a {option.ArgumentType}");
                         }
                     }
                     else
@@ -127,13 +136,30 @@ namespace CP2
 
                 else
                 {
-                    throw new Exception($"Invalid option: {args[i]}");
+                    // throw new Exception($"Invalid option: {args[i]}");
+                    PrintErrorAndExit($"Invalid option: {args[i]}");
                 }
             }
 
             // Проверяет адекватность введённых параметров
-            // если длина меньше... бла бла бла
-            
+            if (DigitCount + LetterCount > WordLength)
+            {
+                PrintErrorAndExit("Length must be greater or equals Digits + Letters!");
+            }
+            else if (DigitCount + LetterCount == WordLength && UseSpecial)
+            {
+                PrintWarning("There is no place for special symbols. Digits + Letters = Length!");
+            }
+			
+			if (WordLength == default && (DigitCount != default || LetterCount != default))
+			{
+				WordLength = DigitCount + LetterCount;
+                PrintWarning($"Length will be {WordLength} ({DigitCount} + {LetterCount})");
+			}
+            else
+            {
+                WordLength = 16;
+            }
             
             SymbolType[] word = new SymbolType[WordLength];
 
@@ -146,11 +172,10 @@ namespace CP2
 
 
             // Test Zone
-			
-            
+
             for (int i = 0; i < WordLength; i++)
             {
-                pwd += GenSymbol(rand.Next(4));
+                pwd += GenSymbol(rand.Next(1, 5));
             }
             
             Console.WriteLine(pwd);
@@ -161,26 +186,25 @@ namespace CP2
         static void SetUppercase()
         {
             UseUppercase = true;
+            AllowedTypes.Add(3);
             Console.WriteLine("аперкейс");
         }
         static void SetSpecial()
         {
             UseSpecial = true;
+            AllowedTypes.Add(4);
             Console.WriteLine("спещиал");
         }
-
         static void SetLength(int len)
         {
             WordLength = len;
             Console.WriteLine($"длина - {len}");
         }
-        
         static void SetDigitsCount(int count)
         {
             DigitCount = count;
             Console.WriteLine($"колво цифр - {count}");
         }
-
         static void SetLettersCount(int count)
         {
             LetterCount = count;
@@ -193,6 +217,7 @@ namespace CP2
         {
             string[] symbols =
             {
+                "",
                 "0123456789",
                 "abcdefghijklmnopqrstuvwxyz",
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -206,11 +231,11 @@ namespace CP2
             int typeId;
             switch (type)
             {
-                case "digit": case "d": typeId = 0; break;
-                case "lower": case "l": typeId = 1; break;
-                case "upper": case "u": typeId = 2; break; 
-                case "special": case "s": typeId = 3; break; 
-                default: throw new Exception($"Invalid Symbol Type: {type}");
+                case "digit": case "d": typeId = 1; break;
+                case "lower": case "l": typeId = 2; break;
+                case "upper": case "u": typeId = 3; break; 
+                case "special": case "s": typeId = 4; break; 
+                default: PrintErrorAndExit($"Invalid Symbol Type: {type}"); typeId = 0; break;
             }
 
             return GenSymbol(typeId);
@@ -266,7 +291,20 @@ namespace CP2
         }
         static int GetRandomIntFromList(List<int> list, int minIndex, int maxIndex)
         {
+            // MAX IS NOT INCLUDED!!!
             return list[rand.Next(minIndex, maxIndex)];
+        }
+
+        
+        
+        static void PrintErrorAndExit(string message)
+        {
+            Console.WriteLine(message);
+            Environment.Exit(1);
+        }
+        static void PrintWarning(string message)
+        {
+            Console.WriteLine("Warning! " + message);
         }
     }
 }

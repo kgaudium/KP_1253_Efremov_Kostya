@@ -1,6 +1,6 @@
 using System;
 
-namespace CP2
+namespace PasswordGenerator
 {
     public class Option
     {
