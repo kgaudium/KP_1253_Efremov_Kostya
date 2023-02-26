@@ -8,10 +8,10 @@ namespace CP2
     {
         static Random rand = new Random();
         
-        static int WordLength = 16;
+        static int WordLength;
         static int DigitCount;
         static int LetterCount;
-        static bool UseUpper;
+        static bool UseUppercase;
         static bool UseSpecial;
 
         static List<int> AllowedTypes;  // список типов, которые нужно генерить
@@ -28,47 +28,54 @@ namespace CP2
 
         static void Main(string[] args)
         {
+            Argument lenArg = new Argument("length", typeof(int), SetLength);
+            Argument digitsArg = new Argument("digits", typeof(int), SetLength); // 
+            Argument lettersArg = new Argument("letters", typeof(int), SetLength); //
+            Argument upperArg = new Argument("uppercase", 'u', typeof(int), SetUppercase);
+            Argument specialArg = new Argument("special", 's', typeof(int), SetSpecial);
 
+            AllowedCommands = new[] {lenArg, digitsArg, lettersArg, upperArg, specialArg };
+            
             // Парсит аргументы (можно было бы делать сплит сразу по коммандам "--length", а потом по "="
-            for (int i = 0; i < args.Length; i++)
-            {
-                if (args[i].Substring(0, 2) == "--")
-                {
-                    string command = args[i].Substring(2, args[i].Length);
-
-                    if (command.Split('=').Length == 1)
-                    {
-                        switch (command)
-                        {
-                            case "uppercase":
-                                SwitchUppercase();
-                                break;
-                            
-                            case "special":
-                                SwitchSpecial();
-                                break;
-                            
-                            case "length":
-                                int len;
-                                
-                                if (!int.TryParse(args[++i], out len))
-                                {
-                                    throw new Exception($"Incorrect \"length\" command argument! Expected integer, got {args[++i]}!");
-                                }
-                                    
-                                SetLength(len);
-                                break;
-                            
-                            case "digits":
-                                
-                                break;
-                            
-                            default: break;
-                            
-                        }
-                    }
-                }
-            }
+            // for (int i = 0; i < args.Length; i++)
+            // {
+            //     if (args[i].Substring(0, 2) == "--")
+            //     {
+            //         string command = args[i].Substring(2, args[i].Length);
+            //
+            //         if (command.Split('=').Length == 1)
+            //         {
+            //             switch (command)
+            //             {
+            //                 case "uppercase":
+            //                     SetUppercase();
+            //                     break;
+            //                 
+            //                 case "special":
+            //                     SetSpecial();
+            //                     break;
+            //                 
+            //                 case "length":
+            //                     int len;
+            //                     
+            //                     if (!int.TryParse(args[++i], out len))
+            //                     {
+            //                         throw new Exception($"Incorrect \"length\" command argument! Expected integer, got {args[++i]}!");
+            //                     }
+            //                         
+            //                     SetLength(len);
+            //                     break;
+            //                 
+            //                 case "digits":
+            //                     
+            //                     break;
+            //                 
+            //                 default: break;
+            //                 
+            //             }
+            //         }
+            //     }
+            // }
 
             
             SymbolType[] word = new SymbolType[WordLength];
@@ -83,7 +90,7 @@ namespace CP2
 
             // Test Zone
 			
-            Argument lenArg = new Argument("length", 'l', true, typeof(int), SetLength);
+            
             for (int i = 0; i < WordLength; i++)
             {
                 pwd += GenSymbol(rand.Next(4));
@@ -94,20 +101,28 @@ namespace CP2
             
         }
 
-        static bool SwitchUppercase()
+        static void SetUppercase()
         {
-            UseUpper = !UseUpper;
-            return UseUpper;
+            UseUppercase = true;
         }
-        static bool SwitchSpecial()
+        static void SetSpecial()
         {
-            UseSpecial = !UseSpecial;
-            return UseSpecial;
+            UseSpecial = true;
         }
 
         static void SetLength(int len)
         {
             WordLength = len;
+        }
+        
+        static void SetDigitsCount(int count)
+        {
+            DigitCount = count;
+        }
+
+        static void SetLettersCount(int count)
+        {
+            LetterCount = count;
         }
         
         static char GenSymbol(int type)

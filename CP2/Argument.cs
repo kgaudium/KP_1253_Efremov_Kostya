@@ -6,31 +6,45 @@ namespace CP2
     {
         public string Name;
         public char? Shortname;
-        public bool HaveArgument;
-        public Type ArgumentType;
+        public Type? ArgumentType;
         public Delegate TargetMethod;
 
-        public Argument(string name, char shortname, bool haveArgument, Type argumentType, Delegate targetMethod)
+        public Argument(string name, char shortname, Type argumentType, Delegate targetMethod)
         {
             Name = name;
             Shortname = shortname;
-            HaveArgument = haveArgument;
             ArgumentType = argumentType;
             TargetMethod = targetMethod;
         }
-        public Argument(string name, bool haveArgument, Type argumentType, Delegate targetMethod)
+        public Argument(string name, Type argumentType, Delegate targetMethod)
         {
             Name = name;
             Shortname = null;
-            HaveArgument = haveArgument;
             ArgumentType = argumentType;
+            TargetMethod = targetMethod;
+        }
+        public Argument(string name, char shortname, Delegate targetMethod)
+        {
+            Name = name;
+            Shortname = shortname;
+            ArgumentType = null;
+            TargetMethod = targetMethod;
+        }
+        public Argument(string name, Delegate targetMethod)
+        {
+            Name = name;
+            Shortname = null;
+            ArgumentType = null;
             TargetMethod = targetMethod;
         }
 
         public override string ToString()
         {
-            string haveArg = HaveArgument ? "Has an argument" : "Hasn't an argument";
-            return $"Argument {Name} ({Shortname}), {haveArg} ({ArgumentType}), calls {TargetMethod} function.";
+            if (ArgumentType == null)
+            {
+                return $"Argument {Name} ({Shortname}), Hasn't an argument, Calls {TargetMethod} function.";
+            }
+            return $"Argument {Name} ({Shortname}), Has an argument ({ArgumentType}), Calls {TargetMethod} function.";
         }
     }
 }
