@@ -2,7 +2,7 @@ namespace PasswordGenerator;
 
 public class MyUtils
 {
-    public static void PrintErrorAndExit(string message)
+    public static void PrintAndExit(string message)
     {
         Console.WriteLine(message);
         Environment.Exit(1);
