@@ -20,7 +20,7 @@
 |   --help    |     -h      |               | Shows help message                                                                                              |
 
 
-- *Options that have a short name and no arguments can be written as __-<opt1><opt2>...<optn>__ (Example: __-us__)*
+- *Options that have a short name and no arguments can be written in one piece (Example: __-us__)*
 
 - *All options are __optional__*
 
