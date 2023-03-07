@@ -251,20 +251,7 @@ Usage:
             
             return symbols[type][rand.Next(symbols[type].Length)];
         }
-        static char GenSymbol(string type)
-        {
-            int typeId;
-            switch (type)
-            {
-                case "digit": case "d": typeId = 1; break;
-                case "lower": case "l": typeId = 2; break;
-                case "upper": case "u": typeId = 3; break; 
-                case "special": case "s": typeId = 4; break; 
-                default: MyUtils.PrintAndExit($"Invalid Symbol Type: {type}"); typeId = 0; break;
-            }
 
-            return GenSymbol(typeId);
-        }
         static char GenSymbol(SymbolType type)
         {
             return GenSymbol((int)type);
