@@ -3,7 +3,7 @@ using System.Runtime.InteropServices.ComTypes;
 
 namespace PasswordGenerator;
 
-public class OptionParser
+public static class OptionParser
 {
     public static void ParseOptions(string[] args, Option[] optionsArray, Option defaultOption)
     {
@@ -14,7 +14,7 @@ public class OptionParser
 
                 if (splitOption.Length == 1) // Если без минусов
                 {
-                    if (args.Length != 1) // и в списке всего одна опция
+                    if (args.Length != 1) // и в списке не одна опция
                     {
                         // throw new Exception($"Unrecognized option: {args[i]}");
                         MyUtils.PrintAndExit($"Unrecognized option: {args[i]}");
