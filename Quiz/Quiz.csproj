@@ -12,6 +12,8 @@
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <Deterministic>true</Deterministic>
+        <LangVersion>11</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,11 +48,17 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Form1.cs">
+        <Compile Include="Properties\Resources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <Compile Include="QuizResult.cs" />
+        <Compile Include="Quiz_q1.cs">
             <SubType>Form</SubType>
         </Compile>
-        <Compile Include="Form1.Designer.cs">
-            <DependentUpon>Form1.cs</DependentUpon>
+        <Compile Include="Quiz_q1.Designer.cs">
+            <DependentUpon>Quiz_q1.cs</DependentUpon>
         </Compile>
         <Compile Include="MenuForm.cs">
           <SubType>Form</SubType>
@@ -58,17 +66,33 @@
         <Compile Include="MenuForm.Designer.cs">
           <DependentUpon>MenuForm.cs</DependentUpon>
         </Compile>
-        <Compile Include="Program.cs" />
+        <Compile Include="AppController.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <EmbeddedResource Include="Properties\Resources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <Compile Include="Properties\Resources.Designer.cs">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Resources.resx</DependentUpon>
+        <Compile Include="Quiz_q2.cs">
+          <SubType>Form</SubType>
         </Compile>
+        <Compile Include="Quiz_q2.Designer.cs">
+          <DependentUpon>Quiz_q2.cs</DependentUpon>
+        </Compile>
+        <Compile Include="ResultsForm.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="ResultsForm.Designer.cs">
+          <DependentUpon>ResultsForm.cs</DependentUpon>
+        </Compile>
+        <EmbeddedResource Include="MenuForm.resx">
+          <DependentUpon>MenuForm.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Properties\Resources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Quiz_q1.resx">
+          <DependentUpon>Quiz_q1.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Quiz_q2.resx">
+          <DependentUpon>Quiz_q2.cs</DependentUpon>
+        </EmbeddedResource>
         <None Include="Properties\Settings.settings">
             <Generator>SettingsSingleFileGenerator</Generator>
             <LastGenOutput>Settings.Designer.cs</LastGenOutput>
