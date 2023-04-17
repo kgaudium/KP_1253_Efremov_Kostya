@@ -15,6 +15,14 @@ namespace Quiz
         public static List<QuizResult> ResultsList = new List<QuizResult>();
         public static QuizResult? CurrentResult;
 
+        public enum Faculty
+        {
+            [Description("ИСАУ")] ISAM,
+            [Description("ФЕИН")] FNES,
+            [Description("ИФИ")] EPI,
+            [Description("ФСГН")] FSHS,
+        }
+        
         [STAThread]
         private static void Main()
         {
@@ -27,14 +35,6 @@ namespace Quiz
         public static void ShowError()
         {
             MessageBox.Show("Некорректные данные!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
-        public enum Faculty
-        {
-            [Description("ИСАУ")] ISAM,
-            [Description("ФЕИН")] FNES,
-            [Description("ИФИ")] EPI,
-            [Description("ФСГН")] FSHS,
         }
     }
 }

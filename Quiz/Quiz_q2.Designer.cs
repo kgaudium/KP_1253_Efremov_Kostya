@@ -18,10 +18,10 @@ namespace Quiz
         private RadioButton FutureRadioButton3;
         private Panel FuturePanel;
         private RadioButton FutureRadioButton1;
-        private PictureBox FuturePictureBox0;
-        private PictureBox FuturePictureBox1;
-        private PictureBox FuturePictureBox2;
-        private PictureBox FuturePictureBox3;
+        private System.Windows.Forms.PictureBox FuturePictureBox0;
+        private System.Windows.Forms.PictureBox FuturePictureBox1;
+        private System.Windows.Forms.PictureBox FuturePictureBox2;
+        private System.Windows.Forms.PictureBox FuturePictureBox3;
         private RadioButton FutureRadioButton0;
         private Label label1;
         private Button EndButton;
@@ -93,6 +93,7 @@ namespace Quiz
             // 
             // FuturePictureBox0
             // 
+            this.FuturePictureBox0.Image = global::Quiz.Properties.Resources.молодой_бизнесмен_в_офисе_который_сидит_на_столе_и_по_телефону_175180548;
             this.FuturePictureBox0.Location = new System.Drawing.Point(48, 136);
             this.FuturePictureBox0.Name = "FuturePictureBox0";
             this.FuturePictureBox0.Size = new System.Drawing.Size(130, 170);
@@ -103,6 +104,7 @@ namespace Quiz
             // 
             // FuturePictureBox1
             // 
+            this.FuturePictureBox1.Image = global::Quiz.Properties.Resources.x_ee3c0888;
             this.FuturePictureBox1.Location = new System.Drawing.Point(207, 136);
             this.FuturePictureBox1.Name = "FuturePictureBox1";
             this.FuturePictureBox1.Size = new System.Drawing.Size(130, 170);
@@ -113,6 +115,7 @@ namespace Quiz
             // 
             // FuturePictureBox2
             // 
+            this.FuturePictureBox2.Image = global::Quiz.Properties.Resources._1622057719_9_phonoteka_org_p_bomzh_art_krasivo_12;
             this.FuturePictureBox2.Location = new System.Drawing.Point(363, 136);
             this.FuturePictureBox2.Name = "FuturePictureBox2";
             this.FuturePictureBox2.Size = new System.Drawing.Size(130, 170);
@@ -123,6 +126,7 @@ namespace Quiz
             // 
             // FuturePictureBox3
             // 
+            this.FuturePictureBox3.Image = global::Quiz.Properties.Resources.images;
             this.FuturePictureBox3.Location = new System.Drawing.Point(519, 136);
             this.FuturePictureBox3.Name = "FuturePictureBox3";
             this.FuturePictureBox3.Size = new System.Drawing.Size(130, 170);
@@ -223,6 +227,7 @@ namespace Quiz
             this.Controls.Add(this.label1);
             this.Controls.Add(this.EndButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Quiz_q2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Quiz_q2_FormClosed);

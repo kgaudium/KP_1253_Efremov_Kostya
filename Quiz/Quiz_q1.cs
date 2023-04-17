@@ -15,6 +15,8 @@ public partial class Quiz_q1 : Form
     public Quiz_q1()
     {
         InitializeComponent();
+        FacultyComboBox.DataSource = Enum.GetValues(typeof(AppController.Faculty));
+        FacultyComboBox.Text = null;
     }
 
     private void GroupTextBox_KeyPress(object sender, KeyPressEventArgs e)
