@@ -28,8 +28,13 @@ namespace Quiz
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            menuForm = new MenuForm();
-            Application.Run(menuForm);
+            // MessageBox.Show(JSON.Dump(new Dictionary<bool, string>(){{true, "hello"}, {false, "goodbye"}}));
+            MessageBox.Show(JSON.Dump(new Dictionary<string, bool>(){{"hello", true}, {"goodbye", false}}));
+            MessageBox.Show(JSON.Dump(@"asd
+dasd
+fdf\tfdfs"));
+            // menuForm = new MenuForm();
+            // Application.Run(menuForm);
         }
 
         public static void ShowError()
