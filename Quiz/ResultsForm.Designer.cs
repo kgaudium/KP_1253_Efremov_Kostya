@@ -34,6 +34,7 @@ partial class ResultsForm
     /// </summary>
     private void InitializeComponent()
     {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResultsForm));
         this.ResultsLabel = new System.Windows.Forms.Label();
         this.ResultsListBox = new System.Windows.Forms.ListBox();
         this.NameTextBox = new System.Windows.Forms.TextBox();
@@ -267,8 +268,10 @@ partial class ResultsForm
         this.Controls.Add(this.ResultsListBox);
         this.Controls.Add(this.ResultsLabel);
         this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+        this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
         this.MaximizeBox = false;
         this.Name = "ResultsForm";
+        this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
         this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ResultsForm_FormClosed);
         this.ResumeLayout(false);
         this.PerformLayout();

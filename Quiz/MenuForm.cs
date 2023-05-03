@@ -59,8 +59,6 @@ namespace Quiz
                     Application.Exit();
                 }
             }
-            
-            
         }
     }
 }

@@ -62,16 +62,16 @@ namespace Quiz
             this.FutureRadioButton0 = new System.Windows.Forms.RadioButton();
             this.BackButton = new System.Windows.Forms.Button();
             this.ResetButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.FuturePictureBox0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FuturePictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FuturePictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FuturePictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.FuturePictureBox0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.FuturePictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.FuturePictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.FuturePictureBox3)).BeginInit();
             this.FuturePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // EndButton
             // 
-            this.EndButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.EndButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.EndButton.Location = new System.Drawing.Point(576, 419);
             this.EndButton.Name = "EndButton";
             this.EndButton.Size = new System.Drawing.Size(96, 30);
@@ -83,7 +83,7 @@ namespace Quiz
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.label1.Location = new System.Drawing.Point(160, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(366, 124);
@@ -192,7 +192,7 @@ namespace Quiz
             // 
             // BackButton
             // 
-            this.BackButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BackButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.BackButton.Location = new System.Drawing.Point(12, 419);
             this.BackButton.Name = "BackButton";
             this.BackButton.Size = new System.Drawing.Size(96, 30);
@@ -203,7 +203,7 @@ namespace Quiz
             // 
             // ResetButton
             // 
-            this.ResetButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ResetButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.ResetButton.Location = new System.Drawing.Point(474, 419);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(96, 30);
@@ -226,15 +226,15 @@ namespace Quiz
             this.Controls.Add(this.FuturePictureBox0);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.EndButton);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Quiz_q2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Quiz_q2_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.FuturePictureBox0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FuturePictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FuturePictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FuturePictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.FuturePictureBox0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.FuturePictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.FuturePictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.FuturePictureBox3)).EndInit();
             this.FuturePanel.ResumeLayout(false);
             this.ResumeLayout(false);
         }

@@ -71,7 +71,7 @@ namespace Quiz
             // 
             // MainLabel
             // 
-            this.MainLabel.Font = new System.Drawing.Font("Comic Sans MS", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MainLabel.Font = new System.Drawing.Font("Comic Sans MS", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.MainLabel.Location = new System.Drawing.Point(182, 9);
             this.MainLabel.Name = "MainLabel";
             this.MainLabel.Size = new System.Drawing.Size(338, 58);
@@ -81,7 +81,7 @@ namespace Quiz
             // 
             // NameLabel
             // 
-            this.NameLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.NameLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.NameLabel.Location = new System.Drawing.Point(12, 99);
             this.NameLabel.Name = "NameLabel";
             this.NameLabel.Size = new System.Drawing.Size(254, 30);
@@ -91,7 +91,7 @@ namespace Quiz
             // 
             // SurnameLabel
             // 
-            this.SurnameLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.SurnameLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.SurnameLabel.Location = new System.Drawing.Point(12, 141);
             this.SurnameLabel.Name = "SurnameLabel";
             this.SurnameLabel.Size = new System.Drawing.Size(254, 30);
@@ -101,7 +101,7 @@ namespace Quiz
             // 
             // GroupLabel
             // 
-            this.GroupLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.GroupLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.GroupLabel.Location = new System.Drawing.Point(12, 183);
             this.GroupLabel.Name = "GroupLabel";
             this.GroupLabel.Size = new System.Drawing.Size(254, 30);
@@ -111,7 +111,7 @@ namespace Quiz
             // 
             // BudgetLabel
             // 
-            this.BudgetLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BudgetLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.BudgetLabel.Location = new System.Drawing.Point(12, 223);
             this.BudgetLabel.Name = "BudgetLabel";
             this.BudgetLabel.Size = new System.Drawing.Size(254, 30);
@@ -121,7 +121,7 @@ namespace Quiz
             // 
             // CardNumberLabel
             // 
-            this.CardNumberLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CardNumberLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.CardNumberLabel.Location = new System.Drawing.Point(12, 267);
             this.CardNumberLabel.Name = "CardNumberLabel";
             this.CardNumberLabel.Size = new System.Drawing.Size(254, 30);
@@ -131,7 +131,7 @@ namespace Quiz
             // 
             // FacultyLabel
             // 
-            this.FacultyLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FacultyLabel.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.FacultyLabel.Location = new System.Drawing.Point(12, 311);
             this.FacultyLabel.Name = "FacultyLabel";
             this.FacultyLabel.Size = new System.Drawing.Size(254, 30);
@@ -141,7 +141,7 @@ namespace Quiz
             // 
             // NameTextBox
             // 
-            this.NameTextBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.NameTextBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.NameTextBox.Location = new System.Drawing.Point(294, 99);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(327, 35);
@@ -149,7 +149,7 @@ namespace Quiz
             // 
             // SurnameTextBox
             // 
-            this.SurnameTextBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.SurnameTextBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.SurnameTextBox.Location = new System.Drawing.Point(294, 141);
             this.SurnameTextBox.Name = "SurnameTextBox";
             this.SurnameTextBox.Size = new System.Drawing.Size(327, 35);
@@ -157,7 +157,7 @@ namespace Quiz
             // 
             // CardNumberTextBox
             // 
-            this.CardNumberTextBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CardNumberTextBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.CardNumberTextBox.Location = new System.Drawing.Point(294, 267);
             this.CardNumberTextBox.MaxLength = 16;
             this.CardNumberTextBox.Name = "CardNumberTextBox";
@@ -177,7 +177,7 @@ namespace Quiz
             // FacultyComboBox
             // 
             this.FacultyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.FacultyComboBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FacultyComboBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.FacultyComboBox.FormattingEnabled = true;
             this.FacultyComboBox.Location = new System.Drawing.Point(294, 311);
             this.FacultyComboBox.Name = "FacultyComboBox";
@@ -186,7 +186,7 @@ namespace Quiz
             // 
             // GroupTextBox
             // 
-            this.GroupTextBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.GroupTextBox.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.GroupTextBox.Location = new System.Drawing.Point(294, 183);
             this.GroupTextBox.MaxLength = 4;
             this.GroupTextBox.Name = "GroupTextBox";
@@ -196,7 +196,7 @@ namespace Quiz
             // 
             // NextButton
             // 
-            this.NextButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.NextButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.NextButton.Location = new System.Drawing.Point(586, 429);
             this.NextButton.Name = "NextButton";
             this.NextButton.Size = new System.Drawing.Size(96, 30);
@@ -207,7 +207,7 @@ namespace Quiz
             // 
             // ResetButton
             // 
-            this.ResetButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ResetButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.ResetButton.Location = new System.Drawing.Point(484, 429);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(96, 30);
@@ -218,7 +218,7 @@ namespace Quiz
             // 
             // DebugButton
             // 
-            this.DebugButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.DebugButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.DebugButton.Location = new System.Drawing.Point(12, 429);
             this.DebugButton.Name = "DebugButton";
             this.DebugButton.Size = new System.Drawing.Size(96, 30);
@@ -249,7 +249,7 @@ namespace Quiz
             this.Controls.Add(this.NameLabel);
             this.Controls.Add(this.MainLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Quiz_q1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
