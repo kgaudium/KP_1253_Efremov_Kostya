@@ -28,6 +28,7 @@ namespace Quiz
 
         public QuizResult(){}
         
+        // Конструктор, используемый для десериализации (JSON парсер возвращает словарь<строка, объект?>)
         public QuizResult(Dictionary<string, object?> dict)
         {
             foreach (var pair in dict)
@@ -82,6 +83,7 @@ namespace Quiz
             return $"{Surname} {Name.Substring(0, 1)}. ({Group})";
         }
 
+        // Приводим к словарю<строка, объект?>. Такой формат принимает JSON.Dump()
         public Dictionary<string, object?> ToDictionary()
         {
             return new Dictionary<string, object?>()

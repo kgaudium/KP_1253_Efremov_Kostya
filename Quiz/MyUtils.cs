@@ -42,6 +42,7 @@ public static class MyUtils
         return result.Substring(0, result.Length-2) + ']';
     }
     
+    // функция возвращает описание у enum (см. AppController.cs 31:13)
     public static string ToDescription<T>(this T value) where T : Enum
     {
         var attribute = typeof(T)

@@ -8,11 +8,12 @@ public partial class Quiz_q1 : Form
     public Quiz_q1()
     {
         InitializeComponent();
+        
+        // Использует enum факультета для заполнения КомбоБокса
         foreach (var faculty in (AppController.Faculty[]) Enum.GetValues(typeof(AppController.Faculty)))
         {
             FacultyComboBox.Items.Add(faculty.ToDescription());
         }
-        // FacultyComboBox.DataSource = Enum.GetValues(typeof(AppController.Faculty));
         FacultyComboBox.Text = null;
     }
 
@@ -35,6 +36,7 @@ public partial class Quiz_q1 : Form
     private void Quiz_q1_FormClosed(object sender, FormClosedEventArgs e)
     {
         // При закрытии окна показывает окно меню в том же месте, где и было это
+        AppController.quiz_q2.Dispose();
         AppController.menuForm.Location = Location;
         AppController.menuForm.Show();
     }
@@ -57,7 +59,7 @@ public partial class Quiz_q1 : Form
         }
     }
 
-    // РЕсетает все значения
+    // Ресетает все значения
     private void ResetButton_Click(object sender, EventArgs e)
     {
         NameTextBox.Text = null;

@@ -110,6 +110,8 @@ namespace Quiz
             resultsList.Add(result);
         }
 
+        // Enum акультета по Description
+        // В интернете нашёл универсальный способ, но он большой и страшный, поэтому будет свич кейс
         public static Faculty GetFacultyByDescription(string description)
         {
             switch (description)
@@ -127,6 +129,7 @@ namespace Quiz
             }
         }
         
+        // Enum будущего по описанию
         public static FutureEnum GetFutureByDescription(string description)
         {
             switch (description)
@@ -143,7 +146,8 @@ namespace Quiz
                     throw new Exception($"There is no Future with this description: {description}");
             }
         }
-
+        
+        // Сериализует список результатов в JSON
         public static string ResultsListToJson()
         {
             return JSON.Dump(ResultsList.Select(result => result.ToDictionary()).ToList());

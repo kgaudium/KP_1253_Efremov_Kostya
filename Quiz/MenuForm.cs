@@ -15,6 +15,7 @@ namespace Quiz
             CenterToScreen();
         }
 
+        // Открывает первое окно опроса
         private void StartQuizButton_Click(object sender, EventArgs e)
         {
             Hide();
@@ -28,6 +29,7 @@ namespace Quiz
             AppController.quiz_q1.Show();
         }
         
+        // Открывает окно с результатами
         private void ResultsButton_Click(object sender, EventArgs e)
         {
             Hide();
@@ -40,11 +42,13 @@ namespace Quiz
             AppController.resultsForm.Show();
         }
 
+        // Кнопка выхода
         private void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        // При закрытии смотрит, сохранены ли результаты. Если нет - предупреждает.
         private void MenuForm_FormClosing(object sender, FormClosingEventArgs e) {
             // Предупреждение о том, что результаты не сохранены
             if (!AppController.IsListSaved && AppController.ResultsList.Count != 0)     
