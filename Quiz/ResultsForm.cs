@@ -77,7 +77,7 @@ public partial class ResultsForm : Form
             
             try
             {
-                AppController.ResultsList = AppController.JsonToResultsList(sr.ReadToEnd());    // Пробуем десериализовать
+                AppController.ResultsList = AppController.JsonToResultsList(sr.ReadToEnd());    // Пробуем десериализовать (перезаписываем список результатов)
             }
             // catch (Exception exception)     // Что-то пошло не по плану
             // {
