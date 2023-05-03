@@ -22,7 +22,8 @@ public partial class Quiz_q2 : Form
         if (!radioButton.Checked)
             return;
         var name = radioButton.Name;
-        AppController.CurrentResult.InTheFuture = new int?(int.Parse(name.Substring(name.Length - 1)));
+        // AppController.CurrentResult.InTheFuture = new int?(int.Parse(name.Substring(name.Length - 1)));
+        AppController.CurrentResult.InTheFuture = (AppController.FutureEnum) int.Parse(name.Substring(name.Length - 1));
     }
 
     private void ResetButton_Click(object sender, EventArgs e)
@@ -40,8 +41,12 @@ public partial class Quiz_q2 : Form
             if (MessageBox.Show("Завершить?", "Спасибо за участие в опросе!", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Asterisk) != DialogResult.OK)
                 return;
-            AppController.ResultsList.Add(AppController.CurrentResult);
+            
+            AppController.AddResult(AppController.CurrentResult);
+            AppController.IsListSaved = false;
+            
             AppController.CurrentResult = (QuizResult)null;
+            
             AppController.menuForm.Location = Location;
             AppController.quiz_q1.Dispose();
             AppController.quiz_q2.Dispose();

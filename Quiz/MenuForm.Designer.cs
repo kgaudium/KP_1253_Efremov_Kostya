@@ -47,12 +47,12 @@ namespace Quiz
             this.MenuPictureBox = new System.Windows.Forms.PictureBox();
             this.ExitButton = new System.Windows.Forms.Button();
             this.MenuLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.MenuPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.MenuPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // StartQuizButton
             // 
-            this.StartQuizButton.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.StartQuizButton.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.StartQuizButton.Location = new System.Drawing.Point(58, 142);
             this.StartQuizButton.Name = "StartQuizButton";
             this.StartQuizButton.Size = new System.Drawing.Size(315, 59);
@@ -63,7 +63,7 @@ namespace Quiz
             // 
             // ResultsButton
             // 
-            this.ResultsButton.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ResultsButton.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.ResultsButton.Location = new System.Drawing.Point(58, 242);
             this.ResultsButton.Name = "ResultsButton";
             this.ResultsButton.Size = new System.Drawing.Size(315, 59);
@@ -74,7 +74,7 @@ namespace Quiz
             // 
             // MenuPictureBox
             // 
-            this.MenuPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("MenuPictureBox.Image")));
+            this.MenuPictureBox.Image = ((System.Drawing.Image) (resources.GetObject("MenuPictureBox.Image")));
             this.MenuPictureBox.InitialImage = null;
             this.MenuPictureBox.Location = new System.Drawing.Point(463, 142);
             this.MenuPictureBox.Name = "MenuPictureBox";
@@ -85,8 +85,8 @@ namespace Quiz
             // 
             // ExitButton
             // 
-            this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExitButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExitButton.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.ExitButton.Location = new System.Drawing.Point(582, 429);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(100, 30);
@@ -98,7 +98,7 @@ namespace Quiz
             // MenuLabel
             // 
             this.MenuLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.MenuLabel.Font = new System.Drawing.Font("Comic Sans MS", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MenuLabel.Font = new System.Drawing.Font("Comic Sans MS", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.MenuLabel.Location = new System.Drawing.Point(200, 30);
             this.MenuLabel.Name = "MenuLabel";
             this.MenuLabel.Size = new System.Drawing.Size(300, 50);
@@ -117,13 +117,13 @@ namespace Quiz
             this.Controls.Add(this.ResultsButton);
             this.Controls.Add(this.StartQuizButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MenuForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Опрос";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MenuForm_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.MenuPictureBox)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MenuForm_FormClosing);
+            ((System.ComponentModel.ISupportInitialize) (this.MenuPictureBox)).EndInit();
             this.ResumeLayout(false);
         }
 

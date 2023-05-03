@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Quiz;
@@ -15,12 +8,17 @@ public partial class Quiz_q1 : Form
     public Quiz_q1()
     {
         InitializeComponent();
-        FacultyComboBox.DataSource = Enum.GetValues(typeof(AppController.Faculty));
+        foreach (var faculty in (AppController.Faculty[]) Enum.GetValues(typeof(AppController.Faculty)))
+        {
+            FacultyComboBox.Items.Add(faculty.ToDescription());
+        }
+        // FacultyComboBox.DataSource = Enum.GetValues(typeof(AppController.Faculty));
         FacultyComboBox.Text = null;
     }
 
     private void GroupTextBox_KeyPress(object sender, KeyPressEventArgs e)
     {
+        // Проверка на ввод: можно только числа
         if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
             return;
         e.Handled = true;
@@ -28,6 +26,7 @@ public partial class Quiz_q1 : Form
 
     private void CardNumberTextBox_KeyPress(object sender, KeyPressEventArgs e)
     {
+        // Проверка на ввод: можно только числа
         if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
             return;
         e.Handled = true;
@@ -35,10 +34,12 @@ public partial class Quiz_q1 : Form
 
     private void Quiz_q1_FormClosed(object sender, FormClosedEventArgs e)
     {
+        // При закрытии окна показывает окно меню в том же месте, где и было это
         AppController.menuForm.Location = Location;
         AppController.menuForm.Show();
     }
 
+    // Переход на следующее окно
     private void NextButton_Click(object sender, EventArgs e)
     {
         if (IsCorrectInput())
@@ -56,6 +57,7 @@ public partial class Quiz_q1 : Form
         }
     }
 
+    // РЕсетает все значения
     private void ResetButton_Click(object sender, EventArgs e)
     {
         NameTextBox.Text = null;
@@ -66,6 +68,7 @@ public partial class Quiz_q1 : Form
         FacultyComboBox.Text = null;
     }
 
+    // Проверка корректности всех введённых данных 
     private bool IsCorrectInput()
     {
         return (NameTextBox.Text.Length > 0)
@@ -75,6 +78,7 @@ public partial class Quiz_q1 : Form
                & (FacultyComboBox.Text != null);
     }
 
+    // "Приминяет" ответы - суёт всё введённое в объект CurrentResult
     private void ApplyAnswers()
     {
         AppController.CurrentResult.Name = NameTextBox.Text;
@@ -82,11 +86,10 @@ public partial class Quiz_q1 : Form
         AppController.CurrentResult.Group = new int?(Convert.ToInt32(GroupTextBox.Text));
         AppController.CurrentResult.Budget = new bool?(BudgetCheckBox.Checked);
         AppController.CurrentResult.CardNumber = CardNumberTextBox.Text;
-        AppController.Faculty result;
-        Enum.TryParse(FacultyComboBox.Text, out result);
-        AppController.CurrentResult.Faculty = result;
+        AppController.CurrentResult.Faculty = AppController.GetFacultyByDescription(FacultyComboBox.Text);
     }
 
+    // Шорткат для разработчика
     private void DebugButton_Click(object sender, EventArgs e)
     {
         NameTextBox.Text = "Kostya";
@@ -94,6 +97,6 @@ public partial class Quiz_q1 : Form
         GroupTextBox.Text = "1253";
         BudgetCheckBox.Checked = true;
         CardNumberTextBox.Text = "1234567898765432";
-        FacultyComboBox.Text = AppController.Faculty.ISAM.ToString();
+        FacultyComboBox.Text = AppController.Faculty.ISAM.ToDescription();
     }
 }

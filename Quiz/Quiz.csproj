@@ -50,6 +50,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="JSON.cs" />
+        <Compile Include="MyUtils.cs" />
         <Compile Include="Properties\Resources.Designer.cs">
           <DesignTime>True</DesignTime>
           <AutoGen>True</AutoGen>
@@ -94,6 +95,9 @@
         </EmbeddedResource>
         <EmbeddedResource Include="Quiz_q2.resx">
           <DependentUpon>Quiz_q2.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="ResultsForm.resx">
+          <DependentUpon>ResultsForm.cs</DependentUpon>
         </EmbeddedResource>
         <None Include="Properties\Settings.settings">
             <Generator>SettingsSingleFileGenerator</Generator>
