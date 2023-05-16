@@ -1,6 +1,6 @@
 namespace PasswordGenerator;
 
-public class MyUtils
+public static class MyUtils
 {
     public static void PrintAndExit(string message)
     {
@@ -12,4 +12,20 @@ public class MyUtils
         Console.WriteLine("Warning! " + message);
     }
 
+    public static string ToBeautyString<T>(this IEnumerable<T> list)
+    {
+        string result = "[";
+
+        foreach (var obj in list)
+        {
+            result += $"{obj}, ";
+        }
+        
+        if (result.Length > 2)
+        {
+            result = result.Substring(0, result.Length - 2);
+        }
+
+        return result + "]";
+    }
 }

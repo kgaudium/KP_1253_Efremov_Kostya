@@ -15,6 +15,7 @@ namespace PasswordGenerator
         static int LetterCount;
         static string FilePath;
         static bool UseUppercase;
+        static bool UseLowercase;
         static bool UseSpecial;
         static bool Debug;
 
@@ -24,7 +25,7 @@ namespace PasswordGenerator
         static bool LettersIsSet;
         static bool FileIsSet;
 
-        static List<SymbolType> AllowedTypes = new() { SymbolType.Digit, SymbolType.Lower};  // список типов, которые нужно генерить
+        static List<SymbolType> AllowedTypes = new();  // список типов, которые нужно генерить
 
         static Option[] AllowedOptions;
 
@@ -43,13 +44,14 @@ namespace PasswordGenerator
             Option digitsArg = new Option("digits", 'd', typeof(int), SetDigitsCount);
             Option lettersArg = new Option("letters", 'l', typeof(int), SetLettersCount);
             Option upperArg = new Option("uppercase", 'u', SetUppercase);
+            Option lowerArg = new Option("lowercase", 'o', SetLowercase);
             Option specialArg = new Option("special", 's', SetSpecial);
             Option fileArg = new Option("file", 'f', typeof(string), SetFile);
             Option seedArg = new Option("seed", typeof(int), SetSeed); // Добавил после создания парсера
             Option debugArg = new Option("debug", SetDebug); // Добавил после окончания всего скрипта
             Option helpArg = new Option("help", 'h', ShowHelp); // Добавил после окончания всего скрипта
 
-            AllowedOptions = new[] {lenArg, digitsArg, lettersArg, upperArg, specialArg, seedArg, debugArg, helpArg, fileArg }; // Список всех опций
+            AllowedOptions = new[] {lenArg, digitsArg, lettersArg, upperArg, lowerArg, specialArg, seedArg, debugArg, helpArg, fileArg }; // Список всех опций
 
             // Парсит аргументы
             OptionParser.ParseOptions(args, AllowedOptions, lenArg);
@@ -57,8 +59,16 @@ namespace PasswordGenerator
             // Формирует лист 
             if (UseSpecial) AllowedTypes.Add(SymbolType.Special);
             if (UseUppercase) AllowedTypes.Add(SymbolType.Upper);
-            if (DigitsIsSet) AllowedTypes.Remove(SymbolType.Digit);
-            if (LettersIsSet) {AllowedTypes.Remove(SymbolType.Lower); AllowedTypes.Remove(SymbolType.Upper);}
+            if (UseLowercase) AllowedTypes.Add(SymbolType.Lower);
+            // if (LettersIsSet) {AllowedTypes.Remove(SymbolType.Lower); AllowedTypes.Remove(SymbolType.Upper);}
+
+            if (AllowedTypes.Count == 0 || (!LettersIsSet && !LengthIsSet))
+            {
+                AllowedTypes.Add(SymbolType.Digit);
+                AllowedTypes.Add(SymbolType.Lower);
+            }
+            
+            if (!DigitsIsSet) AllowedTypes.Add(SymbolType.Digit);
             
             // Проверяет адекватность введённых параметров
             if (LengthIsSet && DigitCount + LetterCount > WordLength)
@@ -86,24 +96,24 @@ namespace PasswordGenerator
             }
             
             if (UseUppercase && LettersIsSet)
-            {
                 AllowedTypes.Remove(SymbolType.Upper);
-            }
+
+            if (UseLowercase && LettersIsSet)
+                AllowedTypes.Remove(SymbolType.Lower);
             
-            if (DigitsIsSet && !UseSpecial && LetterCount + DigitCount < WordLength)
-            {
+            if (DigitsIsSet && !UseSpecial && !UseUppercase && !UseLowercase && LetterCount + DigitCount < WordLength)
                 MyUtils.PrintAndExit($"Cannot fill {WordLength - LetterCount - DigitCount} symbols. Use special symbols or set Digits + Letters = Length or remove Length option!");
-            }
-            
+
+            // Дебаг
+            if (Debug) Console.WriteLine($"Allowed Types: {AllowedTypes.ToBeautyString()}");
 
             // выбирает сид
             rand = SeedIsSet ? new Random(Seed) : new Random();
 
             // Инициализирует пустое слово
             SymbolType[] word = new SymbolType[WordLength];
-            
-            if (Debug) Console.Write("Initial (empty) array: ");
-            if (Debug) PrintArray(word);
+
+            if (Debug) Console.WriteLine($"Initial (empty) array: {word.ToBeautyString()}");
             
             // Заполняет список
             for (int _ = 0; _ < DigitCount; _++)
@@ -111,24 +121,21 @@ namespace PasswordGenerator
                 word[GetRandomIntFromArray(GetNullIndexes(word))] = SymbolType.Digit;
             }
             
-            if (Debug) Console.Write("           Add digits: ");
-            if (Debug) PrintArray(word);
+            if (Debug) Console.Write($"           Add digits: {word.ToBeautyString()}");
             
             for (int _ = 0; _ < LetterCount; _++)
             {
                 word[GetRandomIntFromArray(GetNullIndexes(word))] = (SymbolType)rand.Next(2,3+Convert.ToInt32(UseUppercase));
             }
             
-            if (Debug) Console.Write("          Add letters: ");
-            if (Debug) PrintArray(word);
+            if (Debug) Console.Write($"          Add letters: {word.ToBeautyString()}");
             
             for (int _ = 0; _ < WordLength - DigitCount - LetterCount; _++)
             {
                 word[GetRandomIntFromArray(GetNullIndexes(word))] = GetRandomFromList(AllowedTypes);
             }
             
-            if (Debug) Console.Write("          Final array: ");
-            if (Debug) PrintArray(word);
+            if (Debug) Console.Write($"          Final array: {word.ToBeautyString()}");
 
             
             // Выбирает точные значения каждого символа и заисывает их в результирующую строку
@@ -167,6 +174,11 @@ namespace PasswordGenerator
         {
             UseUppercase = true;
             if (Debug) Console.WriteLine("Use uppercase");
+        }
+        static void SetLowercase()
+        {
+            UseLowercase = true;
+            if (Debug) Console.WriteLine("Use lowercase");
         }
         static void SetSpecial()
         {
@@ -208,6 +220,7 @@ Options:
     --digits|-d <arg>    Sets the exact number of digits (0 for random) (default: 0)
     --letters|-l <arg>   Sets the exact number of letters (both lowercase and uppercase if -u option is set) (0 for random) (default: 0)
     --uppercase|-u       Uses uppercase letters
+    --lowercase|-o       Uses lowercase letters
     --special|-s         Uses special symbols (@, #, $ etc.)
     --file|-f <arg>      Sets path to write to the file
     --seed <arg>         Sets seed (default: random)
@@ -293,20 +306,6 @@ Usage:
         static int GetRandomIntFromArray(int[] arr)
         {
             return arr[rand.Next(0, arr.Length)];
-        }
-
-
-        
-
-        static void PrintArray(Array arr)
-        {
-            string res = "[";
-            foreach (var el in arr)
-            {
-                res += $"{el}, ";
-            }
-            
-            Console.WriteLine(res.Substring(0, res.Length-2) + "]");
         }
     }
 }
