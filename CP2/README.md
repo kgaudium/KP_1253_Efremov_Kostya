@@ -13,6 +13,7 @@
 |  --digits   |     -d      |      int      | Sets the exact number of digits (0 for random) (default: 0)                                                     |                                  
 |  --letters  |     -l      |      int      | Sets the exact number of letters (both lowercase and uppercase if -u option is set) (0 for random) (default: 0) |
 | --uppercase |     -u      |               | Uses uppercase letters                                                                                          |  
+| --lowercase |     -o      |               | Uses lowercase letters                                                                                          |  
 |  --special  |     -s      |               | Uses special symbols (@, #, $ etc.)                                                                             |  
 |   --file    |     -f      |    string     | Sets path to write to the file                                                                                  |
 |   --seed    |             |      int      | Sets seed (default: random)                                                                                     |
