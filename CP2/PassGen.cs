@@ -76,7 +76,7 @@ namespace PasswordGenerator
             // Проверяет адекватность введённых параметров
             if (LengthIsSet && DigitCount + LetterCount > WordLength)
             {
-                MyUtils.PrintAndExit("Length must be equals or greater (Digits + Letters)!");
+                MyUtils.PrintAndExit("Length cannot be less than (Digits + Letters)!");
             }
             
             if (!LengthIsSet)
@@ -104,7 +104,7 @@ namespace PasswordGenerator
             if (UseLowercase && LettersIsSet)
                 AllowedTypes.Remove(SymbolType.Lower);
             
-            if ((DigitsIsSet && LettersIsSet) && !UseSpecial && LetterCount + DigitCount < WordLength)
+            if (LengthIsSet && LettersIsSet ^ DigitsIsSet && !UseSpecial && !UseUppercase && !UseLowercase && LetterCount + DigitCount < WordLength)
                 MyUtils.PrintAndExit($"Cannot fill {WordLength - LetterCount - DigitCount} symbols. Use special symbols or set Digits + Letters = Length or remove Length option!");
             
             // выбирает сид
@@ -242,7 +242,7 @@ Usage:
     >>> Your Password: 2t5i83880b
 
     PassGen.exe -d 5 --length 7 --letters 5
-    >>> Length must be equals or greater (Digits + Letters)!
+    >>> Length cannot be less than (Digits + Letters)!
 
     PassGen.exe -L 100 -us -f NoSecretsHere.txt
     >>> Your Password is written to NoSecretsHere.txt.
