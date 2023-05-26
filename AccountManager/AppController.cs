@@ -14,6 +14,7 @@ namespace AccountManager
         public const string AllowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_@";
         public static string PasswordGeneratorPath = "PassGen\\PassGen.exe";
         public static MainForm mainForm;
+        public static AccountDataBase accountDataBase;
 
         [STAThread]
         static void Main()
@@ -28,6 +29,8 @@ namespace AccountManager
             }
             else
             {
+                var openedDataBase = AccountDataBase.OpenAccounts();
+                accountDataBase = openedDataBase == null ? new AccountDataBase() : (AccountDataBase)openedDataBase;
                 mainForm = new MainForm();
                 Application.Run(mainForm);
             }

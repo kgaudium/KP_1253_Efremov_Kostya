@@ -51,11 +51,13 @@
             this.LengthUpDown = new System.Windows.Forms.NumericUpDown();
             this.LengthLabel = new System.Windows.Forms.Label();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
+            this.PasswordHashTextBox = new System.Windows.Forms.TextBox();
             this.ListLabel = new System.Windows.Forms.Label();
             this.AccountListBox = new System.Windows.Forms.ListBox();
             this.SaveButton = new System.Windows.Forms.Button();
             this.BirthDatePicker = new System.Windows.Forms.DateTimePicker();
             this.AddButton = new System.Windows.Forms.Button();
+            this.ResetSelectionButton = new System.Windows.Forms.Button();
             this.PasswordPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.SeedUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.DigitsUpDown)).BeginInit();
@@ -143,6 +145,7 @@
             // 
             // PasswordPanel
             // 
+            this.PasswordPanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.PasswordPanel.Controls.Add(this.SeedUpDown);
             this.PasswordPanel.Controls.Add(this.GenerateButton);
             this.PasswordPanel.Controls.Add(this.SeedCheckBox);
@@ -169,7 +172,6 @@
             this.SeedUpDown.ReadOnly = true;
             this.SeedUpDown.Size = new System.Drawing.Size(79, 26);
             this.SeedUpDown.TabIndex = 22;
-            this.SeedUpDown.ValueChanged += new System.EventHandler(this.SeedUpDown_ValueChanged);
             // 
             // GenerateButton
             // 
@@ -224,7 +226,6 @@
             this.SpecialCheckBox.TabIndex = 17;
             this.SpecialCheckBox.Text = "Спецсимволы";
             this.SpecialCheckBox.UseVisualStyleBackColor = true;
-            this.SpecialCheckBox.CheckedChanged += new System.EventHandler(this.SpecialCheckBox_CheckedChanged);
             // 
             // UpperCheckBox
             // 
@@ -256,7 +257,6 @@
             this.DigitsUpDown.ReadOnly = true;
             this.DigitsUpDown.Size = new System.Drawing.Size(79, 26);
             this.DigitsUpDown.TabIndex = 15;
-            this.DigitsUpDown.ValueChanged += new System.EventHandler(this.DigitsUpDown_ValueChanged);
             // 
             // LettersUpDown
             // 
@@ -266,7 +266,6 @@
             this.LettersUpDown.ReadOnly = true;
             this.LettersUpDown.Size = new System.Drawing.Size(79, 26);
             this.LettersUpDown.TabIndex = 14;
-            this.LettersUpDown.ValueChanged += new System.EventHandler(this.LettersUpDown_ValueChanged);
             // 
             // LengthUpDown
             // 
@@ -275,7 +274,6 @@
             this.LengthUpDown.Name = "LengthUpDown";
             this.LengthUpDown.Size = new System.Drawing.Size(79, 26);
             this.LengthUpDown.TabIndex = 13;
-            this.LengthUpDown.ValueChanged += new System.EventHandler(this.LengthUpDown_ValueChanged);
             // 
             // LengthLabel
             // 
@@ -296,6 +294,17 @@
             this.PasswordTextBox.Size = new System.Drawing.Size(357, 26);
             this.PasswordTextBox.TabIndex = 12;
             // 
+            // PasswordHashTextBox
+            // 
+            this.PasswordHashTextBox.Font = new System.Drawing.Font("Comic Sans MS", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (254)));
+            this.PasswordHashTextBox.Location = new System.Drawing.Point(12, 242);
+            this.PasswordHashTextBox.Multiline = true;
+            this.PasswordHashTextBox.Name = "PasswordHashTextBox";
+            this.PasswordHashTextBox.ReadOnly = true;
+            this.PasswordHashTextBox.Size = new System.Drawing.Size(394, 44);
+            this.PasswordHashTextBox.TabIndex = 23;
+            this.PasswordHashTextBox.Visible = false;
+            // 
             // ListLabel
             // 
             this.ListLabel.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (254)));
@@ -315,6 +324,7 @@
             this.AccountListBox.Name = "AccountListBox";
             this.AccountListBox.Size = new System.Drawing.Size(331, 292);
             this.AccountListBox.TabIndex = 11;
+            this.AccountListBox.SelectedIndexChanged += new System.EventHandler(this.AccountListBox_SelectedIndexChanged);
             // 
             // SaveButton
             // 
@@ -325,6 +335,7 @@
             this.SaveButton.TabIndex = 21;
             this.SaveButton.Text = "Сохранить";
             this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // BirthDatePicker
             // 
@@ -343,12 +354,25 @@
             this.AddButton.TabIndex = 20;
             this.AddButton.Text = "Добавить";
             this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            // 
+            // ResetSelectionButton
+            // 
+            this.ResetSelectionButton.Font = new System.Drawing.Font("Comic Sans MS", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (254)));
+            this.ResetSelectionButton.Location = new System.Drawing.Point(651, 478);
+            this.ResetSelectionButton.Name = "ResetSelectionButton";
+            this.ResetSelectionButton.Size = new System.Drawing.Size(137, 31);
+            this.ResetSelectionButton.TabIndex = 23;
+            this.ResetSelectionButton.Text = "Снять выбор";
+            this.ResetSelectionButton.UseVisualStyleBackColor = true;
+            this.ResetSelectionButton.Click += new System.EventHandler(this.ResetSelectionButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 584);
+            this.Controls.Add(this.ResetSelectionButton);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.BirthDatePicker);
             this.Controls.Add(this.SaveButton);
@@ -361,6 +385,7 @@
             this.Controls.Add(this.BirthLabel);
             this.Controls.Add(this.SurnameTextBox);
             this.Controls.Add(this.SurnameLabel);
+            this.Controls.Add(this.PasswordHashTextBox);
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.NameLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -376,6 +401,10 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.TextBox PasswordHashTextBox;
+
+        private System.Windows.Forms.Button ResetSelectionButton;
 
         private System.Windows.Forms.CheckBox SeedCheckBox;
         

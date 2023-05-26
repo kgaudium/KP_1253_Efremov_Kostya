@@ -51,6 +51,7 @@
         <Compile Include="Account.cs" />
         <Compile Include="AccountDataBase.cs" />
         <Compile Include="AccountUtils.cs" />
+        <Compile Include="JSON.cs" />
         <Compile Include="MainForm.cs">
             <SubType>Form</SubType>
         </Compile>

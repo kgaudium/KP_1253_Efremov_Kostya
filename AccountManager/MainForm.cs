@@ -21,14 +21,13 @@ namespace AccountManager
         {
             InitializeComponent();
             passwordGenerator = new PasswordGenerator(AppController.PasswordGeneratorPath);
+            UpdateAccountList();
         }
 
         private void NameTextBox_TextChanged(object sender, EventArgs e)
         {
-            // Если логина нет или 
             // if (LoginTextBox.Text.Length == 0 || AccountUtils.TransliterateRussian(((TextBox) sender).Text).Contains(LoginTextBox.Text))
             LoginTextBox.Text = AccountUtils.TransliterateRussian(((TextBox) sender).Text);
-            
         }
 
         private void NameTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -63,6 +62,14 @@ namespace AccountManager
         
         private void GenerateButton_Click(object sender, EventArgs e)
         {
+            passwordGenerator.DigitsCount = DigitsUpDown.ReadOnly ? null : int.Parse(DigitsUpDown.Text);
+            passwordGenerator.LettersCount = LettersUpDown.ReadOnly ? null : int.Parse(LettersUpDown.Text);
+            passwordGenerator.Length = int.Parse(LengthUpDown.Text);
+            passwordGenerator.Seed = SeedUpDown.ReadOnly ? null : int.Parse(SeedUpDown.Text);
+            passwordGenerator.UseUpper = UpperCheckBox.Checked;
+            passwordGenerator.UseLower = LowerCheckBox.Checked;
+            passwordGenerator.UseSpecial = SpecialCheckBox.Checked;
+            
             PasswordTextBox.Text = passwordGenerator.Generate();
         }
 
@@ -77,18 +84,11 @@ namespace AccountManager
             if (((CheckBox) sender).Checked)
             {
                 DigitsUpDown.ReadOnly = false;
-                passwordGenerator.DigitsCount = int.Parse(DigitsUpDown.Text);
             }
             else
             {
                 DigitsUpDown.ReadOnly = true;
-                passwordGenerator.DigitsCount = null;
             }
-        }
-
-        private void LengthUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            passwordGenerator.Length = int.Parse(((NumericUpDown) sender).Text);
         }
 
         private void SeedCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -96,45 +96,89 @@ namespace AccountManager
             if (((CheckBox) sender).Checked)
             {
                 SeedUpDown.ReadOnly = false;
-                passwordGenerator.Seed = int.Parse(SeedUpDown.Text);
             }
             else
             {
                 SeedUpDown.ReadOnly = true;
-                passwordGenerator.Seed = null;
             }
         }
 
-        private void LettersUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            passwordGenerator.LettersCount = int.Parse(((NumericUpDown) sender).Text);
-        }
-
-        private void DigitsUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            passwordGenerator.DigitsCount = int.Parse(((NumericUpDown) sender).Text);
-        }
-
-        private void SeedUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            passwordGenerator.Seed = int.Parse(((NumericUpDown) sender).Text);
-        }
 
         private void UpperCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            passwordGenerator.UseUpper = ((CheckBox) sender).Checked;
             LettersUpDown.ReadOnly = !(((CheckBox) sender).Checked && LettersCheckBox.Checked);
         }
 
         private void LowerCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            passwordGenerator.UseUpper = ((CheckBox) sender).Checked;
             LettersUpDown.ReadOnly = !(((CheckBox) sender).Checked && LettersCheckBox.Checked);
         }
 
-        private void SpecialCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void AddButton_Click(object sender, EventArgs e)
         {
-            passwordGenerator.UseUpper = ((CheckBox) sender).Checked;
+            Account account = new Account(LoginTextBox.Text, PasswordTextBox.Text, NameTextBox.Text, SurnameTextBox.Text, BirthDatePicker.Value);
+            AppController.accountDataBase.AddAccount(account);
+            UpdateAccountList();
+        }
+
+        public void UpdateAccountList()
+        {
+            AccountListBox.Items.Clear();
+            foreach (var acc in AppController.accountDataBase.GetAccountList())
+            {
+                AccountListBox.Items.Add(acc.ToString());
+            }
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            AppController.accountDataBase.SaveAccounts();
+        }
+
+        private void AccountListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AccountListBox.SelectedIndex < 0)
+                return;
+            
+            Account account = AppController.accountDataBase.GetAccount(AccountListBox.SelectedIndex);
+
+            NameTextBox.Text = account.Name;
+            SurnameTextBox.Text = account.Surname;
+            BirthDatePicker.Value = account.BirthDate;
+            LoginTextBox.Text = account.Login;
+
+            PasswordPanel.Visible = false;
+            PasswordHashTextBox.Visible = true;
+            PasswordHashTextBox.Text = account.PasswordHash;
+            PasswordLabel.Text = "Хэш пароля";
+            
+        }
+
+        private void ResetSelectionButton_Click(object sender, EventArgs e)
+        {
+            AccountListBox.ClearSelected();
+            PasswordLabel.Text = "Пароль";
+            NameTextBox.Clear();
+            SurnameTextBox.Clear();
+            BirthDatePicker.Value = DateTime.Today;
+            LoginTextBox.Clear();
+            PasswordHashTextBox.Clear();
+            
+            PasswordTextBox.Clear();
+            LettersUpDown.Text = "";
+            DigitsUpDown.Text = "";
+            LengthUpDown.Text = "";
+            SeedUpDown.Text = "";
+
+            LettersCheckBox.Checked = false;
+            DigitsCheckBox.Checked = false;
+            SeedCheckBox.Checked = false;
+            UpperCheckBox.Checked = false;
+            LowerCheckBox.Checked = false;
+            SpecialCheckBox.Checked = false;
+
+            PasswordPanel.Visible = true;
+            PasswordHashTextBox.Visible = false;
         }
     }
 }

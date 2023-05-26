@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -29,7 +27,7 @@ namespace AccountManager
             }
         }
 
-        private string passwordHash;
+        public string PasswordHash { get; private set; }
 
         public string Name { get; private set; }
         public string Surname { get; private set; }
@@ -47,10 +45,16 @@ namespace AccountManager
         public Account(string login, string password, string name, string surname, DateTime birthDate)
         {
             Login = login;
-            passwordHash = password.ToSHA256();
+            PasswordHash = password.ToSHA256();
             Name = name;
             Surname = surname;
             BirthDate = birthDate;
         }
+
+        public override string ToString()
+        {
+            return $"{Login} ({Name} {Surname})";
+        }
+        
     }
 }
