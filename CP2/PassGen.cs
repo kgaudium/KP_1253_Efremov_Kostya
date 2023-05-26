@@ -62,14 +62,17 @@ namespace PasswordGenerator
             if (UseLowercase) AllowedTypes.Add(SymbolType.Lower);
             // if (LettersIsSet) {AllowedTypes.Remove(SymbolType.Lower); AllowedTypes.Remove(SymbolType.Upper);}
 
-            if (AllowedTypes.Count == 0 || (!LettersIsSet && !LengthIsSet))
+            if (AllowedTypes.Count == 0 && !LettersIsSet && !DigitsIsSet)
             {
                 AllowedTypes.Add(SymbolType.Digit);
                 AllowedTypes.Add(SymbolType.Lower);
             }
             
-            if (!DigitsIsSet) AllowedTypes.Add(SymbolType.Digit);
+            if (!DigitsIsSet && !AllowedTypes.Contains(SymbolType.Digit)) AllowedTypes.Add(SymbolType.Digit);
             
+            // Дебаг
+            if (Debug) Console.WriteLine($"Allowed Types: {AllowedTypes.ToBeautyString()}");
+
             // Проверяет адекватность введённых параметров
             if (LengthIsSet && DigitCount + LetterCount > WordLength)
             {
@@ -101,12 +104,9 @@ namespace PasswordGenerator
             if (UseLowercase && LettersIsSet)
                 AllowedTypes.Remove(SymbolType.Lower);
             
-            if (DigitsIsSet && !UseSpecial && !UseUppercase && !UseLowercase && LetterCount + DigitCount < WordLength)
+            if ((DigitsIsSet && LettersIsSet) && !UseSpecial && LetterCount + DigitCount < WordLength)
                 MyUtils.PrintAndExit($"Cannot fill {WordLength - LetterCount - DigitCount} symbols. Use special symbols or set Digits + Letters = Length or remove Length option!");
-
-            // Дебаг
-            if (Debug) Console.WriteLine($"Allowed Types: {AllowedTypes.ToBeautyString()}");
-
+            
             // выбирает сид
             rand = SeedIsSet ? new Random(Seed) : new Random();
 
@@ -121,21 +121,21 @@ namespace PasswordGenerator
                 word[GetRandomIntFromArray(GetNullIndexes(word))] = SymbolType.Digit;
             }
             
-            if (Debug) Console.Write($"           Add digits: {word.ToBeautyString()}");
+            if (Debug) Console.WriteLine($"           Add digits: {word.ToBeautyString()}");
             
             for (int _ = 0; _ < LetterCount; _++)
             {
                 word[GetRandomIntFromArray(GetNullIndexes(word))] = (SymbolType)rand.Next(2,3+Convert.ToInt32(UseUppercase));
             }
             
-            if (Debug) Console.Write($"          Add letters: {word.ToBeautyString()}");
+            if (Debug) Console.WriteLine($"          Add letters: {word.ToBeautyString()}");
             
             for (int _ = 0; _ < WordLength - DigitCount - LetterCount; _++)
             {
                 word[GetRandomIntFromArray(GetNullIndexes(word))] = GetRandomFromList(AllowedTypes);
             }
             
-            if (Debug) Console.Write($"          Final array: {word.ToBeautyString()}");
+            if (Debug) Console.WriteLine($"          Final array: {word.ToBeautyString()}");
 
             
             // Выбирает точные значения каждого символа и заисывает их в результирующую строку

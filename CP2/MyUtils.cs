@@ -4,7 +4,7 @@ public static class MyUtils
 {
     public static void PrintAndExit(string message)
     {
-        Console.WriteLine(message);
+        Console.WriteLine("Error! " + message);
         Environment.Exit(1);
     }
     public static void PrintWarning(string message)
