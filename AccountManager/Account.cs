@@ -83,7 +83,7 @@ namespace AccountManager
 
         public override string ToString()
         {
-            return $"{Login} ({Name} {Surname})";
+            return $"{Login} ({Name} {Surname}) - {AccountPermissions.ToString().Substring(0,1)}";
         }
 
         public void ChangePassword(string newPassword)
