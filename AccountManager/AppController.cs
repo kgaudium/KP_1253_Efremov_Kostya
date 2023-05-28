@@ -11,10 +11,10 @@ namespace AccountManager
 {
     static class AppController
     {
-        public const string AllowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_@";
-        public static string PasswordGeneratorPath = "PassGen\\PassGen.exe";
-        public static MainForm mainForm;
-        public static AccountDataBase accountDataBase;
+        internal static string PasswordGeneratorPath = "PassGen\\PassGen.exe";
+        internal static MainForm mainForm;
+        internal static LoginForm loginForm;
+        internal static AccountDataBase accountDataBase;
 
         [STAThread]
         static void Main()
@@ -31,8 +31,8 @@ namespace AccountManager
             {
                 var openedDataBase = AccountDataBase.OpenAccounts();
                 accountDataBase = openedDataBase == null ? new AccountDataBase() : (AccountDataBase)openedDataBase;
-                mainForm = new MainForm();
-                Application.Run(mainForm);
+                loginForm = new LoginForm();
+                Application.Run(loginForm);
             }
             
         }

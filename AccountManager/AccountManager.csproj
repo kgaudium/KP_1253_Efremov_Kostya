@@ -51,7 +51,12 @@
         <Compile Include="Account.cs" />
         <Compile Include="AccountDataBase.cs" />
         <Compile Include="AccountUtils.cs" />
-        <Compile Include="JSON.cs" />
+        <Compile Include="LoginForm.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="LoginForm.Designer.cs">
+          <DependentUpon>LoginForm.cs</DependentUpon>
+        </Compile>
         <Compile Include="MainForm.cs">
             <SubType>Form</SubType>
         </Compile>
@@ -61,6 +66,9 @@
         <Compile Include="AppController.cs" />
         <Compile Include="PasswordGenerator.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <EmbeddedResource Include="LoginForm.resx">
+          <DependentUpon>LoginForm.cs</DependentUpon>
+        </EmbeddedResource>
         <EmbeddedResource Include="MainForm.resx">
           <DependentUpon>MainForm.cs</DependentUpon>
         </EmbeddedResource>
@@ -85,6 +93,9 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="App.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="Resources\eye.png" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

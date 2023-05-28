@@ -29,10 +29,10 @@ namespace AccountManager
 
         public string PasswordHash { get; private set; }
 
-        public string Name { get; private set; }
-        public string Surname { get; private set; }
+        public string Name { get;  set; }
+        public string Surname { get;  set; }
 
-        public DateTime BirthDate { get; private set; }
+        public DateTime BirthDate { get;  set; }
 
         public int Age
         {
@@ -42,18 +42,53 @@ namespace AccountManager
             }
         }
 
-        public Account(string login, string password, string name, string surname, DateTime birthDate)
+        public Permissions AccountPermissions;
+        
+        [Flags]
+        public enum Permissions
+        {
+            None = 0,
+            ViewUsers = 1,
+            ViewAdmins = 2,
+            EditSelf = 4,
+            EditOther = 8,
+            DeleteUsers = 16,
+
+            Guest = ViewUsers,
+            CommonUser = ViewAdmins | ViewUsers,
+            ExtendedUser = CommonUser | EditSelf,
+            Moderator = ExtendedUser | EditOther,
+            Admin = Moderator | DeleteUsers
+        }
+
+        public Account()
+        {
+            Login = "";
+            PasswordHash = "";
+            Name = "Guest";
+            Surname = "";
+            BirthDate = default(DateTime);
+            AccountPermissions = Permissions.Guest;
+        }
+
+        public Account(string login, string password, string name, string surname, DateTime birthDate, Permissions permissions)
         {
             Login = login;
             PasswordHash = password.ToSHA256();
             Name = name;
             Surname = surname;
             BirthDate = birthDate;
+            AccountPermissions = permissions;
         }
 
         public override string ToString()
         {
             return $"{Login} ({Name} {Surname})";
+        }
+
+        public void ChangePassword(string newPassword)
+        {
+            PasswordHash = newPassword.ToSHA256();
         }
         
     }
