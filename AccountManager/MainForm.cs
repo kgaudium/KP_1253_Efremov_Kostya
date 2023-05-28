@@ -67,7 +67,8 @@ namespace AccountManager
         private void NameTextBox_TextChanged(object sender, EventArgs e)
         {
             // if (LoginTextBox.Text.Length == 0 || AccountUtils.TransliterateRussian(((TextBox) sender).Text).Contains(LoginTextBox.Text))
-            LoginTextBox.Text = AccountUtils.TransliterateRussian(((TextBox) sender).Text);
+            if (!LoginTextBox.ReadOnly)
+                LoginTextBox.Text = AccountUtils.TransliterateRussian(((TextBox) sender).Text);
         }
 
         private void NameTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -208,13 +209,30 @@ namespace AccountManager
 
         private void ResetSelectionButton_Click(object sender, EventArgs e)
         {
-            AccountListBox.ClearSelected();
+            ClearAllFields();
+            
+            if (currentUser.AccountPermissions == Account.Permissions.Guest) return;
+            
             PasswordLabel.Text = "Пароль";
+            AccountListBox.ClearSelected();
+            PasswordPanel.Visible = true;
+            PasswordHashTextBox.Visible = false;
+            NewPasswordTextBox.Visible = false;
+            ChangePasswordButton.Visible = false;
+            LoginTextBox.ReadOnly = false;
+            NameTextBox.ReadOnly = false;
+            SurnameTextBox.ReadOnly = false;
+            BirthDatePicker.Enabled = true;
+        }
+
+        private void ClearAllFields()
+        {
             NameTextBox.Clear();
             SurnameTextBox.Clear();
             BirthDatePicker.Value = DateTime.Today;
             LoginTextBox.Clear();
             PasswordHashTextBox.Clear();
+            NewPasswordTextBox.Clear();
             AccountTypeComboBox.Text = "";
             
             PasswordTextBox.Clear();
@@ -229,18 +247,9 @@ namespace AccountManager
             UpperCheckBox.Checked = false;
             LowerCheckBox.Checked = false;
             SpecialCheckBox.Checked = false;
-
-            PasswordPanel.Visible = true;
-            PasswordHashTextBox.Visible = false;
-            NewPasswordTextBox.Visible = false;
-            ChangePasswordButton.Visible = false;
-            
-            LoginTextBox.ReadOnly = false;
-            NameTextBox.ReadOnly = false;
-            SurnameTextBox.ReadOnly = false;
-            BirthDatePicker.Enabled = true;
         }
 
+        
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             AppController.loginForm.Location = Location;
@@ -261,6 +270,7 @@ namespace AccountManager
             SurnameTextBox.Text = account.Surname;
             BirthDatePicker.Value = account.BirthDate;
             AccountTypeComboBox.Text = account.AccountPermissions.ToString();
+            NewPasswordTextBox.Text = "";
 
             PasswordPanel.Visible = false;
             if (currentUser.AccountPermissions != Account.Permissions.Guest)
@@ -301,6 +311,7 @@ namespace AccountManager
             
             selectedAccount = GetSelectedAccount();
             AppController.accountDataBase.DeleteAccount(selectedAccount.Login);
+            ClearAllFields();
             UpdateAccountList();
         }
 
@@ -319,6 +330,8 @@ namespace AccountManager
             selectedAccount.BirthDate = BirthDatePicker.Value;
             selectedAccount.AccountPermissions =
                 (Account.Permissions) Enum.Parse(typeof(Account.Permissions), AccountTypeComboBox.Text);
+            
+            UpdateAccountList();
         }
 
         private void ChangePasswordButton_Click(object sender, EventArgs e)
@@ -331,5 +344,6 @@ namespace AccountManager
         {
             return AppController.accountDataBase.GetAccount(AccountListBox.Text.Split(' ')[0]);
         }
+
     }
 }

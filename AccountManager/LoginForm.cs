@@ -76,8 +76,8 @@ public partial class LoginForm : Form
 
     private void ClearAllFields()
     {
-        LoginTextBox.Text = "";
-        PasswordTextBox.Text = "";
+        LoginTextBox.Clear();
+        PasswordTextBox.Clear();
         hidePassword = true;
         ErrorLabel.Text = "";
     }
